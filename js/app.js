@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   llenarSelect();
 })
 
-// Event listener para los selec de busqueda
+// Event listener para los select de busqueda
 marca.addEventListener('change', e => {
   datosBusqueda.marca = e.target.value;
   filtrarAuto();
@@ -74,6 +74,7 @@ function mostrarAutos(autos) {
 
   limpiarHTML();//Elimina html previo.
 
+  //Recorremos el arreglo y creamos el html (DOM)
   autos.forEach(auto => {
     const { marca, modelo, year, puertas, transmision, precio, color } = auto;
     const autoHTML = document.createElement('p');
@@ -111,10 +112,25 @@ function filtrarAuto() {
     .filter(filtrarPuertas)
     .filter(fitrarTransmision)
     .filter(filtrarColor);
-
-  //console.log(resultado);
+    
+//console.log(resultado);
   mostrarAutos(resultado);
 
+  if ( resultado.length ) {
+    mostrarAutos(resultado);
+  }else {
+    noResultado();
+  }
+}
+
+function noResultado() {
+
+  limpiarHTML();
+
+  const noResultado = document.createElement('div');
+    noResultado.classList.add('alerta', 'error');
+    noResultado.textContent = "No hay resultados, intenta otra selección.";
+    resultado.appendChild(noResultado);
 }
 
 function filtrarMarca(auto) {
@@ -172,3 +188,4 @@ function filtrarColor(auto) {
   }
   return auto;
 }
+
